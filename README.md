@@ -59,3 +59,15 @@ local function pay(player)
     config.sendPaycheck(player.PlayerData.source, payment)
 end
 ```
+
+# Item (ox_inventory)
+
+```
+['paycheck'] = {
+    label = 'Paycheck',
+    weight = 0,
+    stack = true,
+    close = true,
+    description = 'A paycheck you can cash at a bank.',
+},
+```
