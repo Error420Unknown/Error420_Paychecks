@@ -66,8 +66,9 @@ end
 ['paycheck'] = {
     label = 'Paycheck',
     weight = 0,
-    stack = true,
+    stack = false, -- Prevent stacking so metadata stays unique
     close = true,
-    description = 'A paycheck you can cash at a bank.',
+    description = 'A paycheck for your hard work.',
+    metadata = {'job', 'amount'} -- Ensure metadata is stored
 },
 ```
