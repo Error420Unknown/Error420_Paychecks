@@ -38,14 +38,15 @@ AddEventHandler('Error420_Paychecks:givePaycheck', function(source)
     local paycheckItem = Config.PaycheckItem
     local player = exports.qbx_core:GetPlayer(source)
 
-    if not player then
-        return
-    end
+    if not player then return end
 
     local jobData = player.PlayerData.job
     local amountPerCheck = jobData and jobData.payment
 
     if amountPerCheck and amountPerCheck > 0 then
-        exports.ox_inventory:AddItem(source, paycheckItem, 1, { job = jobData.name, amount = amountPerCheck })
+        exports.ox_inventory:AddItem(source, paycheckItem, 1, {
+            job = jobData.name,
+            amount = amountPerCheck
+        })
     end
 end)

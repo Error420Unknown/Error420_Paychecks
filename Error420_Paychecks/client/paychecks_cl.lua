@@ -28,3 +28,12 @@ AddEventHandler('Error420_Paychecks:cash', function()
         end
     end)
 end)
+
+CreateThread(function()
+    while not exports.ox_inventory do Wait(100) end
+
+    exports.ox_inventory:displayMetadata({
+        amount = 'Paycheck Value $',
+        job = 'Job'
+    })
+end)
