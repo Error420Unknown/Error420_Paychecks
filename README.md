@@ -70,5 +70,5 @@ end
     close = true,
     description = 'A paycheck for your hard work.',
     metadata = {'job', 'amount'} -- Ensure metadata is stored
-},
+}
 ```
