@@ -18,7 +18,6 @@ end
 RegisterNetEvent('Error420_Paychecks:cash')
 AddEventHandler('Error420_Paychecks:cash', function()
     lib.callback('Error420_Paychecks:redeem', false, function(success, message)
-        print("[DEBUG] Callback Response:", success, message)
         if message then
             lib.notify({
                 title = 'Paycheck',
