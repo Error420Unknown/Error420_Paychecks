@@ -29,7 +29,15 @@ sendPaycheck = function (playerId, payment)
         return
     end
 
-    exports.ox_inventory:AddItem(player.PlayerData.source, 'paycheck', 1, { amount = payment })
+    local playerName = player.PlayerData.charinfo.firstname .. ' ' .. player.PlayerData.charinfo.lastname
+
+    local metadata = {
+        amount = tonumber(payment),
+        owner = playerName,
+        job = player.PlayerData.job and player.PlayerData.job.name or "unemployed"
+    }
+
+    exports.ox_inventory:AddItem(player.PlayerData.source, 'paycheck', 1, metadata)
     Notify(player.PlayerData.source, locale('info.received_paycheck', payment))
 end,
 ```
@@ -39,9 +47,13 @@ end,
 ```
 local function pay(player)
     local job = player.PlayerData.job
-    local payment = GetJob(job.name).grades[job.grade.level].payment or job.payment
+    local jobData = GetJob(job.name)
+
+    if not jobData then return end
+
+    local payment = jobData.grades[job.grade.level].payment or job.payment
     if payment <= 0 then return end
-    if not GetJob(job.name).offDutyPay and not job.onduty then return end
+    if not jobData.offDutyPay and not job.onduty then return end
 
     if config.money.paycheckSociety then
         local account = config.getSocietyAccount(job.name)
@@ -66,9 +78,9 @@ end
 ['paycheck'] = {
     label = 'Paycheck',
     weight = 0,
-    stack = false,
+    stack = true,
     close = true,
     description = 'A paycheck for your hard work.',
-    metadata = {'job', 'amount'}
-}
+    metadata = {'job', 'amount', 'owner'}
+},
 ```
