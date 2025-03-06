@@ -15,8 +15,7 @@ for _, bank in ipairs(Config.Banks) do
     })
 end
 
-RegisterNetEvent('Error420_Paychecks:cash')
-AddEventHandler('Error420_Paychecks:cash', function()
+RegisterNetEvent('Error420_Paychecks:cash', function()
     lib.callback('Error420_Paychecks:redeem', false, function(success, message)
         if message then
             lib.notify({
@@ -28,11 +27,29 @@ AddEventHandler('Error420_Paychecks:cash', function()
     end)
 end)
 
+RegisterNetEvent('Error420_Paychecks:notifyPolice', function()
+    if Config.Dispatch == 'ps-dispatch' then
+        exports['ps-dispatch']:SuspiciousActivity()
+    elseif Config.Dispatch == 'stevo_cad' then
+        local data = {
+            caller = 'ESTA',
+            coords = cache.coords,
+            priority = "A",
+            callmessage = "Paycheck Fruad",
+            cadmessage = "Someone attempted to cash in a fraudulent paycheck"
+        }
+        exports['stevo_cad']:dispatch(data)
+    elseif Config.Dispatch == 'custom' then
+        -- Custom dispatch logic here
+    end
+end)
+
 CreateThread(function()
     while not exports.ox_inventory do Wait(100) end
 
     exports.ox_inventory:displayMetadata({
         amount = 'Paycheck Value $',
-        job = 'Job'
+        job = 'Job',
+        owner = 'Owner'
     })
 end)

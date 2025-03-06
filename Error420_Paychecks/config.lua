@@ -8,3 +8,4 @@ Config.Banks = {
 }
 
 Config.PaycheckItem = "paycheck"
+Config.Dispatch = 'ps-dispatch' -- 'ps-dispatch' | 'custom'
